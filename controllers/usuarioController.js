@@ -10,7 +10,8 @@ const login = async (request, response) => {
         }
         
         const usuario = await autenticaUsuarioDB(request.body);
-        const token = jwt.sign({ usuario }, process.env.SECRET, { expiresIn: 1800 });
+        const secret = process.env.SECRET || 'fallback_secret_key_123';
+        const token = jwt.sign({ usuario }, secret, { expiresIn: 1800 });
         return response.json({ auth: true, token: token, usuario });
     } catch (err) {
         const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
@@ -27,7 +28,8 @@ function verificaJWT(request, response, next) {
     if (token.toLowerCase().startsWith('authorization ')) token = token.slice(14);
     else if (token.startsWith('Bearer ')) token = token.slice(7);
 
-    jwt.verify(token, process.env.SECRET, function (err, decoded) {
+    const secret = process.env.SECRET || 'fallback_secret_key_123';
+    jwt.verify(token, secret, function (err, decoded) {
         if (err) return response.status(401).json({ auth: false, message: 'Erro ao autenticar o token.' });
 
         request.usuario = decoded.usuario;
