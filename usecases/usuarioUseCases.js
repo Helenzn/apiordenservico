@@ -12,7 +12,10 @@ const mapRowToUsuario = (row) => new Usuario(
 
 const autenticaUsuarioDB = async (body) => {
     try {
-        const { username, senha } = body
+        const { username, senha } = body;
+        if (!username || !senha) {
+            throw "Username e senha são obrigatórios";
+        }
         const results = await pool.query(`SELECT * FROM usuarios WHERE username = $1 AND senha = $2`, [username, senha]);
 
         if (results.rowCount == 0) throw "Usuário ou senha inválidos";
@@ -46,8 +49,10 @@ const getUsuarioPorCodigoDB = async (codigo) => {
 
 const addUsuarioDB = async (body) => {
     try {
-        const { nome, username, email, senha, tipo } = body;
-        //tipo = 'comum';
+        const { nome, username, email, senha, tipo = 'comum' } = body;
+        if (!nome || !username || !email || !senha) {
+            throw "Campos obrigatórios: nome, username, email, senha";
+        }
         const result = await pool.query(`INSERT INTO usuarios (nome, username, email, senha, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING codigo, nome, username, email, tipo`, [nome, username, email, senha, tipo]);
         if (result.rowCount === 0) throw "Erro ao criar usuário.";
 

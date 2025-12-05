@@ -1,55 +1,80 @@
 const { getClientesDB, postClientesDB, putClientesDB, deleteClientesDB, getClientePorCodigoDB } = require ('../usecases/clienteUseCases');
 
 const getClientes = async (request, response) => {
-    await getClientesDB()
-    .then(data => response.status(200).json(data))
-    .catch(err => response.status(400).json({
-        status: 'error',
-        message: 'Erro ao consultar os Clientes: '+ err    }));
+    try {
+        const data = await getClientesDB();
+        response.status(200).json(data);
+    } catch (err) {
+        const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
+        response.status(400).json({
+            status: 'error',
+            message: 'Erro ao consultar os Clientes: ' + errorMessage
+        });
+    }
 }
 
-
 const postClientes = async (request, response) => {
-    await postClientesDB (request.body)
-    .then (data => response.status(200).json({
-        status:'sucess',
-        message: 'Cliente criado com sucesso!',
-        objeto: data}))
-    .catch(err=> response.status(400).json({
-        status:'error', 
-        message:err}));
+    try {
+        const data = await postClientesDB(request.body);
+        response.status(200).json({
+            status: 'success',
+            message: 'Cliente criado com sucesso!',
+            objeto: data
+        });
+    } catch (err) {
+        const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
+        response.status(400).json({
+            status: 'error',
+            message: errorMessage
+        });
+    }
 }
 
 const putClientes = async (request, response) => {
-    await putClientesDB ({...request.body, codigo: parseInt(request.params.codigo)})
-    .then (data => response.status(200).json({
-        status:'sucess',
-        message: 'Cliente editado com sucesso!',
-        objeto: data
-    }))
-    .catch(err=> response.status(400).json({
-        status:'error', 
-        message:err}));
+    try {
+        const data = await putClientesDB({ ...request.body, codigo: parseInt(request.params.codigo) });
+        response.status(200).json({
+            status: 'success',
+            message: 'Cliente editado com sucesso!',
+            objeto: data
+        });
+    } catch (err) {
+        const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
+        response.status(400).json({
+            status: 'error',
+            message: errorMessage
+        });
+    }
 }
 
 const deleteClientes = async (request, response) => {
-    await deleteClientesDB (parseInt(request.params.codigo))
-    .then (data => response.status(200).json({
-        status:'sucess',
-        message: data //'Cliente deletado com sucesso!',
-       // objeto: data
-        }))
-    .catch(err=> response.status(400).json({
-        status:'error', 
-        message:err}));
+    try {
+        const data = await deleteClientesDB(parseInt(request.params.codigo));
+        response.status(200).json({
+            status: 'success',
+            message: 'Cliente deletado com sucesso!',
+            objeto: data
+        });
+    } catch (err) {
+        const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
+        response.status(400).json({
+            status: 'error',
+            message: errorMessage
+        });
+    }
 }
 
 const getClientePorCodigo = async (request, response) => {
-    await getClientePorCodigoDB (parseInt(request.params.codigo))
-    .then (data => response.status(200).json({data}))
-    .catch(err=> response.status(400).json({
-        status:'error', 
-        message:'Erro ao consultar o Cliente: '+err}));
+    try {
+        const data = await getClientePorCodigoDB(parseInt(request.params.codigo));
+        response.status(200).json({ data });
+    } catch (err) {
+        const errorMessage = typeof err === 'string' ? err : (err.message || 'Erro interno do servidor');
+        response.status(400).json({
+            status: 'error',
+            message: 'Erro ao consultar o Cliente: ' + errorMessage
+        });
+    }
 }
 
 module.exports={

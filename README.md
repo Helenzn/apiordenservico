@@ -52,10 +52,14 @@
 │     ├─ clientes/
 │     ├─ pedidos/
 │     ├─ servicos/
+│     ├─ usuarios/
 │     ├─ Home.jsx
 │     ├─ Sobre.jsx
-│     ├─ Menu.css
-│     └─ Menu.jsx
+│  ├─ Menu.css
+│  ├─ Menu.jsx
+│  ├─ MenuPrivado.jsx
+│  └─ MenuPublico.jsx
+├─ seguranca/
 ├─ servicos/
 ├─ App.css
 └─ App.jsx
@@ -69,7 +73,7 @@
     - ```yarn install```
     - ```yarn create react-app NOMEAQUI --template cra-template-pwa```
     - ```yarn add bootstrap bootstrap-icons react-bootstrap react-router-dom```
-- Execute a aplicação no terminal do projeto ```yarn start```
+- Execute a aplicação no terminal do projeto ```yarn start``` ou ```npm run start```
 
 ## Banco de dados 
 
@@ -95,7 +99,10 @@ INSERT INTO servicos (nome, preco, descricao)VALUES('Conserto de PC', 150.00, 'F
 INSERT INTO pedidos (data, codigo_cliente, codigo_servico)VALUES('2025-10-20', 1, 1),('2025-10-21', 2, 2),('2025-10-22', 3, 3),('2025-10-23', 1, 5),('2025-10-23', 2, 4);
 
 INSERT INTO usuarios (nome, username, email, senha, tipo) VALUES 
-('Administrador', 'admin', 'admin@admin.com', 'XXX', 'admin'), ('Usuario Comum', 'user', 'user@user.com', '123456');
+('Administrador', 'admin', 'admin@admin.com', 'XXX', 'admin');
+
+INSERT INTO usuarios (nome, username, email, senha) VALUES 
+('Usuario Comum', 'user', 'user@user.com', '123456');
 ```
 
 ### Selecionar tabelas: 
@@ -104,6 +111,7 @@ INSERT INTO usuarios (nome, username, email, senha, tipo) VALUES
 SELECT * FROM clientes; 
 SELECT * FROM servicos; 
 SELECT * FROM pedidos;
+SELECT * FROM usuarios;
 ```
 
 ### Apagar tabelas: 
@@ -112,6 +120,7 @@ SELECT * FROM pedidos;
 DROP TABLE servicos; 
 DROP TABLE pedidos; 
 DROP TABLE clientes; 
+DROP TABLE usuarios;
 ```
 
 > Instituto Federal Sul-rio-grandense - PF/RS   
