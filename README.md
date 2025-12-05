@@ -7,7 +7,7 @@
 - O **Sistema de Ordens de Serviço** consiste no desenvolvimento de uma Progressive Web App (PWA) utilizando React, que se comunica com uma API para acessar e manipular dados de um banco de dados.
     - API back-end **(apiordenservico)** foi feita em  ```javaScript``` e interage com um banco de dados `relacional ```postgreSQL```
     - API front-end **(frontordenservico)** foi feita em ```React``` e interage com a o back-end
-- Ambas estão disponíveis no serviço de nuvem: [apiordenservico](https://github.com/Helenzn/apiordenservico) e [frontordenservico](https://github.com/Helenzn/frontordenservico)
+- Disponível no serviço de nuvem: [link](https://frontordenservico.vercel.app/)
 
 ## Funcionalidades principais
 
@@ -82,16 +82,9 @@ CREATE TABLE servicos ( codigo SERIAL PRIMARY KEY, nome VARCHAR(100) NOT NULL, p
 
 CREATE TABLE pedidos ( codigo SERIAL PRIMARY KEY, data DATE NOT NULL, codigo_cliente INT NOT NULL, codigo_servico INT NOT NULL, FOREIGN KEY (codigo_cliente) REFERENCES clientes(codigo), FOREIGN KEY (codigo_servico) REFERENCES servicos(codigo) );
 
-CREATE TABLE usuarios (
-    codigo SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    tipo VARCHAR(20)
-);
+CREATE TABLE usuarios (codigo SERIAL PRIMARY KEY, nome VARCHAR(100) NOT NULL, username VARCHAR(50) UNIQUE NOT NULL, email VARCHAR(100) UNIQUE NOT NULL, senha VARCHAR(255) NOT NULL, tipo VARCHAR(20));
 ```
-//diferente de vazio vou saber q é admin
+
 ### Inserir dados nas tabelas: 
 
 ```sql
@@ -101,10 +94,8 @@ INSERT INTO servicos (nome, preco, descricao)VALUES('Conserto de PC', 150.00, 'F
 
 INSERT INTO pedidos (data, codigo_cliente, codigo_servico)VALUES('2025-10-20', 1, 1),('2025-10-21', 2, 2),('2025-10-22', 3, 3),('2025-10-23', 1, 5),('2025-10-23', 2, 4);
 
-
 INSERT INTO usuarios (nome, username, email, senha, tipo) VALUES 
-('Administrador', 'admin', 'admin@admin.com', '210105@pw2025', 'admin'),
-('Usuario Comum', 'user1', 'user@teste.com', '123456', 'comum');
+('Administrador', 'admin', 'admin@admin.com', 'XXX', 'admin'), ('Usuario Comum', 'user', 'user@user.com', '123456');
 ```
 
 ### Selecionar tabelas: 
